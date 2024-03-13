@@ -1,10 +1,14 @@
 <?php
 
-if (!defined('TYPO3_MODE')) {
+use TYPO3\CMS\Core\Http\ApplicationType;
+
+if (!defined('TYPO3_MODE') && !defined('TYPO3')) {
     die('Access denied.');
 }
 
-if (TYPO3_MODE === 'BE') {
+$typo3Version = new \TYPO3\CMS\Core\Information\Typo3Version();
+
+//if (ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isBackend()) {
     include_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('gridelements') . 'Classes/Backend/TtContent.php');
 
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['cms/layout/db_layout.php']['drawHeaderHook']['gridelements'] = 'GridElementsTeam\\Gridelements\\Hooks\\PageLayoutController->drawHeaderHook';
@@ -15,7 +19,7 @@ if (TYPO3_MODE === 'BE') {
     if (!empty($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['gridelements']['additionalStylesheet']) && \TYPO3\CMS\Core\Utility\GeneralUtility::validPathStr($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['gridelements']['additionalStylesheet'])) {
         $GLOBALS['TBE_STYLES']['skins']['gridelements']['stylesheetDirectories']['gridelements_additional'] = $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['gridelements']['additionalStylesheet'];
     }
-}
+//}
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_gridelements_backend_layout');
 
@@ -79,7 +83,7 @@ $GLOBALS['TYPO3_USER_SETTINGS']['showitem'] .= ',
 // Hooks
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS'][\TYPO3\CMS\Core\Configuration\FlexForm\FlexFormTools::class]['flexParsing']['gridelements'] = \GridElementsTeam\Gridelements\Hooks\TtContentFlexForm::class;
 
-if (\TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionNumberToInteger(TYPO3_version) >= 11000000) {
+if ($typo3Version->getMajorVersion() >= 11) {
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['typo3/class.db_list_extra.inc']['getTable'][] = \GridElementsTeam\Gridelements\Hooks\DatabaseRecordList::class;
     if (!empty($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['gridelements']['nestingInListModule'])) {
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['typo3/class.db_list_extra.inc']['actions'][] = \GridElementsTeam\Gridelements\Hooks\DatabaseRecordList::class;

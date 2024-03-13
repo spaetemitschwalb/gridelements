@@ -103,6 +103,9 @@ class ColPosList extends AbstractItemsProcFunc
             if ($layout) {
                 if ($contentType !== '' && !empty($layout['__items'])) {
                     foreach ($layout['__items'] as $itemKey => $itemArray) {
+                        if (!isset($itemArray[1])) {
+                            continue;
+                        }
                         $column = $itemArray[1];
                         if (
                             (

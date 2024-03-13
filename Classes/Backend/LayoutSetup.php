@@ -119,7 +119,7 @@ class LayoutSetup
     protected function loadLayoutSetup(int $pageId)
     {
         // Load page TSconfig.
-        if (TYPO3_MODE === 'FE') {
+        if (TYPO3 === 'FE') {
             $pageTSconfig = $GLOBALS['TSFE']->getPagesTSconfig();
         } else {
             $pageTSconfig = BackendUtility::getPagesTSconfig($pageId);

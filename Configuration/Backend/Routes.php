@@ -5,6 +5,9 @@ declare(strict_types=1);
 use GridElementsTeam\Gridelements\Wizard\GridelementsBackendLayoutWizardElement;
 use GridElementsTeam\Gridelements\Wizard\GridelementsBackendLayoutWizardElement10;
 
+
+$typo3Version = new \TYPO3\CMS\Core\Information\Typo3Version();
+
 /**
  * Definitions for routes provided by EXT:gridelements
  * Contains all "regular" routes for entry points
@@ -13,7 +16,7 @@ use GridElementsTeam\Gridelements\Wizard\GridelementsBackendLayoutWizardElement1
  * Currently the "access" property is only used so no token creation + validation is made,
  * but will be extended further.
  */
-if (\TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionNumberToInteger(TYPO3_version) >= 11000000) {
+if ($typo3Version->getMajorVersion() >= 11) {
     return [
         // Login screen of the TYPO3 Backend
         /** Wizards */

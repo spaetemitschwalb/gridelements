@@ -28,7 +28,7 @@ class GridelementsGridColumnItem extends GridColumnItem
     /**
      * @var GridelementsGridColumn
      */
-    protected $column;
+    protected \TYPO3\CMS\Backend\View\BackendLayout\Grid\GridColumn $column;
 
     /**
      * @var array
@@ -90,22 +90,22 @@ class GridelementsGridColumnItem extends GridColumnItem
         $allowed = base64_encode(json_encode($this->column->getAllowed()));
         $disallowed = base64_encode(json_encode($this->column->getDisallowed()));
 
-        if ($this->context->getDrawingConfiguration()->getShowNewContentWizard()) {
-            $urlParameters = [
-                'id' => $pageId,
-                'sys_language_uid' => $this->context->getSiteLanguage()->getLanguageId(),
-                'tx_gridelements_allowed' => $allowed,
-                'tx_gridelements_disallowed' => $disallowed,
-                'tx_gridelements_container' => $this->column->getGridContainerId(),
-                'tx_gridelements_columns' => $this->column->getColumnNumber(),
-                'colPos' => -1,
-                'uid_pid' => -$this->record['uid'],
-                'returnUrl' => GeneralUtility::getIndpEnv('REQUEST_URI'),
-
-            ];
-            $routeName = BackendUtility::getPagesTSconfig($pageId)['mod.']['newContentElementWizard.']['override']
-                ?? 'new_content_element_wizard';
-        } else {
+//        if ($this->context->getDrawingConfiguration()->getShowNewContentWizard()) {
+//            $urlParameters = [
+//                'id' => $pageId,
+//                'sys_language_uid' => $this->context->getSiteLanguage()->getLanguageId(),
+//                'tx_gridelements_allowed' => $allowed,
+//                'tx_gridelements_disallowed' => $disallowed,
+//                'tx_gridelements_container' => $this->column->getGridContainerId(),
+//                'tx_gridelements_columns' => $this->column->getColumnNumber(),
+//                'colPos' => -1,
+//                'uid_pid' => -$this->record['uid'],
+//                'returnUrl' => GeneralUtility::getIndpEnv('REQUEST_URI'),
+//
+//            ];
+//            $routeName = BackendUtility::getPagesTSconfig($pageId)['mod.']['newContentElementWizard.']['override']
+//                ?? 'new_content_element_wizard';
+//        } else {
             $urlParameters = [
                 'edit' => [
                     'tt_content' => [
@@ -115,7 +115,7 @@ class GridelementsGridColumnItem extends GridColumnItem
                 'returnUrl' => GeneralUtility::getIndpEnv('REQUEST_URI'),
             ];
             $routeName = 'record_edit';
-        }
+//        }
 
         return (string)$uriBuilder->buildUriFromRoute($routeName, $urlParameters);
     }

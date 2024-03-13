@@ -1,5 +1,7 @@
 <?php
 
+$typo3Version = new \TYPO3\CMS\Core\Information\Typo3Version();
+
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile('gridelements', 'Configuration/TypoScript/', 'Gridelements (deprecated)');
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile('gridelements', 'Configuration/TypoScript/DataProcessingLibContentElement', 'Gridelements w/DataProcessing (recommended)');
 
@@ -138,7 +140,9 @@ $GLOBALS['TCA']['tt_content']['types']['gridelements_pi1']['showitem'] = '
     --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:notes,rowDescription
 	';
 
-if (\TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionNumberToInteger(TYPO3_version) < 11000000) {
-    $GLOBALS['TCA']['tt_content']['ctrl']['shadowColumnsForNewPlaceholders'] .= ',tx_gridelements_container,tx_gridelements_columns';
+if ($typo3Version->getMajorVersion() >= 11) {
+    if (isset($GLOBALS['TCA']['tt_content']['ctrl']['shadowColumnsForNewPlaceholders'])) {
+        $GLOBALS['TCA']['tt_content']['ctrl']['shadowColumnsForNewPlaceholders'] .= ',tx_gridelements_container,tx_gridelements_columns';
+    }
     $GLOBALS['TCA']['tt_content']['columns']['tx_gridelements_children']['config']['appearance']['showRemovedLocalizationRecords'] = true;
 }
