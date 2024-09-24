@@ -2,7 +2,7 @@
 
 use TYPO3\CMS\Core\Http\ApplicationType;
 
-if (!defined('TYPO3_MODE') && !defined('TYPO3')) {
+if (!defined('TYPO3')) {
     die('Access denied.');
 }
 
